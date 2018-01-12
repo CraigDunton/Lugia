@@ -1,0 +1,13 @@
+﻿@model ExploreModel
+@{
+    ViewData["Title"] = "Explore";
+}
+@using (Html.BeginForm("Explore", "Explore", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.Query)
+    @Html.ValidationMessageFor(model => model.Query)
+    <button type="submit">Explore</button>
+}
+<div>
+    @Html.DisplayFor(model => model.Result)
+</div>
