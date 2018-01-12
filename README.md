@@ -1,0 +1,3 @@
+# Lugia
+
+Lugia is sick.
