@@ -37,8 +37,8 @@ namespace LugiaProject
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                googleOptions.ClientId = "670770840947-bnnva5pk87unaq9jejkrehi5tcrl8nie.apps.googleusercontent.com"; //Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = "SMQwa-r8gx8EGglFIHVKYR3R"; //Configuration["Authentication:Google:ClientSecret"];
             });
 
             // Add application services.
