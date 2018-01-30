@@ -2,12 +2,41 @@
 @{
     ViewData["Title"] = "Explore";
 }
+
+
+
 @using (Html.BeginForm("Explore", "Explore", FormMethod.Post))
 {
+    //if this is a form for Explore and Results is [Required], why isn't it here?
     @Html.TextBoxFor(model => model.Query)
     @Html.ValidationMessageFor(model => model.Query)
     <button type="submit">Explore</button>
 }
+<div class="content-container">
+
+@if (Model != null)
+{
+    //TODO: make this take a random URL for more diversity
+    var res = Model.Result.First();
+    
+    <div>
+        @res.Title
+    </div>
+    
+    <iframe id="content"
+            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+            frameborder="0"
+            width="100%"
+            height="100%"
+            seamless="seamless"
+            src=@res.Url>
+    </iframe>
+    
+}
+
+</div>
+@*
 <div>
     @Html.DisplayFor(model => model.Result)
 </div>
+    *@

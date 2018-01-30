@@ -4,14 +4,46 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using LugiaProject.Models;
 using HtmlAgilityPack;
+using LugiaProject.Data;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace LugiaProject.Controllers
 {
     public class ExploreController : Controller
     {
-        public IActionResult Index()
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _dbContext;
+
+        public ExploreController(
+            ApplicationDbContext dbContext,
+          UserManager<ApplicationUser> userManager)
         {
-            return View();
+            _dbContext = dbContext;
+            _userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            Random rand = new Random();
+
+            //TODO: get only one of a users interests. Not sure the model is set up
+            var interests = _dbContext.Interests.Where(u => u.UserId == user.Id).ToList();
+            int r = rand.Next(interests.Count);
+            var interest = interests.ElementAt(r);
+
+            ExploreModel eModel = new ExploreModel()
+            {
+                Query = interest.Name
+
+            };
+            var scr = new Scraper();
+            eModel.Result = scr.ParseBingUrls(eModel.Query);
+
+            return View(eModel);
         }
         [HttpPost]
         public IActionResult Explore(ExploreModel model)
@@ -40,8 +72,8 @@ namespace LugiaProject.Controllers
                            .ToList();
             foreach (var n in nodes)
             {
-                var w = new HtmlWeb();
-                var d = web.Load(n.First().Attributes["href"].Value);
+                //var w = new HtmlWeb();
+                //var d = web.Load(n.First().Attributes["href"].Value);
                 var stm = new StumbleModel()
                 {
                     Title = n.First().InnerText,

@@ -10,3 +10,15 @@ C:\Workspace\LugiaProject\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.Asse
 C:\Workspace\LugiaProject\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.AssemblyInfo.cs
 C:\Workspace\LugiaProject\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.dll
 C:\Workspace\LugiaProject\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.pdb
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\bin\Debug\netcoreapp2.0\LugiaProject.deps.json
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\bin\Debug\netcoreapp2.0\LugiaProject.runtimeconfig.json
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\bin\Debug\netcoreapp2.0\LugiaProject.runtimeconfig.dev.json
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\bin\Debug\netcoreapp2.0\LugiaProject.dll
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\bin\Debug\netcoreapp2.0\LugiaProject.pdb
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.csprojResolveAssemblyReference.cache
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.csproj.CoreCompileInputs.cache
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.AssemblyInfoInputs.cache
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.AssemblyInfo.cs
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.dll
+C:\Users\Craig\Desktop\Code\Lugia\LugiaProject\obj\Debug\netcoreapp2.0\LugiaProject.pdb
