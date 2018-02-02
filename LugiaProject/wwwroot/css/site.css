@@ -53,6 +53,10 @@
     border: none;
 }
 
+#exploreForm{
+    margin-left: 30px;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

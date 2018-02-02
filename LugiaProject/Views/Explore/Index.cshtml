@@ -1,17 +1,12 @@
 ﻿@model ExploreModel
 @{
     ViewData["Title"] = "Explore";
+    //TempData["Query"] = Model.Query;
+    //TempData["Result"] = Model.Result;
+    //Console.WriteLine("%$%$%$%$HERE: {0}, {1}", Model.Query, Model.Result);
 }
 
 
-
-@using (Html.BeginForm("Explore", "Explore", FormMethod.Post))
-{
-    //if this is a form for Explore and Results is [Required], why isn't it here?
-    @Html.TextBoxFor(model => model.Query)
-    @Html.ValidationMessageFor(model => model.Query)
-    <button type="submit">Explore</button>
-}
 <div class="content-container">
 
 @if (Model != null)
