@@ -1,9 +1,8 @@
 ﻿@model ExploreModel
 @{
+
     ViewData["Title"] = "Explore";
-    //TempData["Query"] = Model.Query;
-    //TempData["Result"] = Model.Result;
-    //Console.WriteLine("%$%$%$%$HERE: {0}, {1}", Model.Query, Model.Result);
+
 }
 
 
@@ -11,8 +10,8 @@
 
 @if (Model != null)
 {
-    //TODO: make this take a random URL for more diversity
     var res = Model.Result.First();
+    Model.Result.RemoveAll(m => m.Url == res.Url);
     
     <div>
         @res.Title

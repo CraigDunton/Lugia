@@ -76,8 +76,7 @@ namespace LugiaProject.Controllers
             if (eModel == null || eModel.Result.Count == 0)
             {
                 Random rand = new Random();
-
-                //TODO: get only one of a users interests. Not sure the model is set up
+                
                 var interests = _dbContext.Interests.Where(u => u.UserId == user.Id).ToList();
                 int r = rand.Next(interests.Count);
                 var interest = interests.ElementAt(r);
@@ -96,6 +95,7 @@ namespace LugiaProject.Controllers
             else
             {
                 eModel.Result.Remove(eModel.Result.First());
+                ModelState.Clear();
                 return View("Index", eModel);
             }
 
@@ -115,7 +115,7 @@ namespace LugiaProject.Controllers
                 return View("Index", model);
             } else
             {
-                model.Result.Remove(model.Result.First());
+                //model.Result.Remove(model.Result.First());
                 return View("Index", model);
             }
         }
@@ -168,10 +168,13 @@ namespace LugiaProject.Controllers
                 //in case of 400, 302, idk shit hits the fan sometimes
                 catch (WebException e)
                 {
-                    using (WebResponse response = e.Response)
+                    if (!e.Status.Equals(WebExceptionStatus.UnknownError))
                     {
-                        HttpWebResponse httpResponse = (HttpWebResponse)response;
-                        Console.WriteLine("Error code: {0} ", httpResponse.StatusCode);
+                        using (WebResponse response = e.Response)
+                        {
+                            HttpWebResponse httpResponse = (HttpWebResponse)response;
+                            Console.WriteLine("Error code: {0} ", httpResponse.StatusCode);
+                        }
                     }
                 }
 
