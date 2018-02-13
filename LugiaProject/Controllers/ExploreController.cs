@@ -30,8 +30,7 @@ namespace LugiaProject.Controllers
             ApplicationUser user = await _userManager.GetUserAsync(User);
 
             Random rand = new Random();
-
-            //TODO: get only one of a users interests. Not sure the model is set up
+            
             var interests = _dbContext.Interests.Where(u => u.UserId == user.Id).ToList();
             int r = rand.Next(interests.Count);
             var interest = interests.ElementAt(r);
@@ -41,21 +40,12 @@ namespace LugiaProject.Controllers
                 Query = interest.Name
 
             };
-            if (eModel.Result.Count == 0)
-            {
-                var scr = new BingScraper();
-                eModel.Result = scr.ParseBingUrls(eModel.Query);
-                //var scr = new DuckScraper();
-                //eModel.Result = scr.ParseDuckUrls(eModel.Query);
-                Console.WriteLine("Done");
-                return View("Index", eModel);
-            }
-            else
-            {
-                eModel.Result.Remove(eModel.Result.First());
-                return View("Index", eModel);
-            }
-            
+            var scr = new BingScraper();
+            eModel.Result = scr.ParseBingUrls(eModel.Query);
+            //var scr = new DuckScraper();
+            //eModel.Result = scr.ParseDuckUrls(eModel.Query);
+            Console.WriteLine("Done");
+            return View("Index", eModel);
         }
 
       

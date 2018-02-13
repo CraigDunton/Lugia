@@ -11,7 +11,7 @@
 @if (Model != null)
 {
     var res = Model.Result.First();
-    Model.Result.RemoveAll(m => m.Url == res.Url);
+    Model.Result.Remove(res);
     
     <div>
         @res.Title
