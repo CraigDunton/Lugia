@@ -1,0 +1,49 @@
+﻿
+@model DonateViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Donate</h2>
+
+<form asp-area="" asp-controller="Donate" asp-action="Index" method="post" id="donateForm">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Points</th>
+            <th scope="col">Donation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Water Dudes</td>
+            <td>We give water to dudes</td>
+            <td>700</td>
+            <td>
+                <input class="form-control" style="width: 10em" type="number" min="0" step="1">
+            </td>
+        </tr>
+        <tr>
+            <td>Feed em Boys</td>
+            <td>Holla holla holla, feed em boys</td>
+            <td>420</td>
+            <td>
+                <input class="form-control" style="width: 10em" type="number" min="0" step="1">
+            </td>
+        </tr>
+        @foreach (NonProfitModel nonprofit in Model.NonProfitsList)
+        {
+            <tr>
+                <td>@nonprofit.Name</td>
+                <td>@nonprofit.Description</td>
+                <td>@nonprofit.Points</td>
+                @Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Points)
+            </tr>
+        }
+        </tbody>
+    </table>
+    <button type="submit" style="float: right" class="btn btn-primary">Divvy</button>
+</form>

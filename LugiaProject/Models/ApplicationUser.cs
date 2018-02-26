@@ -10,7 +10,7 @@ namespace LugiaProject.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
-
         public virtual List<AInterest> Interests { get; set; }
+        public int Points { get; set; }
     }
 }

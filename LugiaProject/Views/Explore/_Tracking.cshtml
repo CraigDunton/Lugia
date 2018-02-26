@@ -1,0 +1,23 @@
+﻿
+@*
+    
+*@
+<script src="http://timemejs.com/timeme.min.js"></script>
+
+<script type="text/javascript">
+    TimeMe.initialize({
+        currentPageName: "explore", // page name
+        idleTimeoutInSeconds: 15 // time before user considered idle
+    });
+    $(document).ready(function() {
+        TimeMe.startTimer("explore");
+    });
+</script>
+
+<div class="navbar-right">
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            Time on Page: 
+        </li>
+    </ul>
+</div>

@@ -36,7 +36,7 @@ namespace LugiaProject.Controllers
             var interest = interests.ElementAt(r);
 
             ExploreModel eModel = new ExploreModel()
-            {
+            {   
                 Query = interest.Name
 
             };

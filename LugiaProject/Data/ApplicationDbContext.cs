@@ -12,6 +12,7 @@ namespace LugiaProject.Data
         }
 
         public virtual DbSet<AInterest> Interests { get; set; }
+        public virtual DbSet<NonProfitModel> NonProfits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
