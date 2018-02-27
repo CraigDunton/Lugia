@@ -5,7 +5,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Donate</h2>
+<h2 style="float: left">Donate</h2>
+<h2 style="float: right">Points: @Model.User.Points</h2>
 
 <form asp-area="" asp-controller="Donate" asp-action="Index" method="post" id="donateForm">
     <table class="table">
@@ -18,6 +19,7 @@
         </tr>
         </thead>
         <tbody>
+        <!--
         <tr>
             <td>Water Dudes</td>
             <td>We give water to dudes</td>
@@ -34,13 +36,20 @@
                 <input class="form-control" style="width: 10em" type="number" min="0" step="1">
             </td>
         </tr>
+        -->
         @foreach (NonProfitModel nonprofit in Model.NonProfitsList)
         {
+            @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Points)
+            @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Name)
+            @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Description)
+            @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Id)
             <tr>
                 <td>@nonprofit.Name</td>
                 <td>@nonprofit.Description</td>
                 <td>@nonprofit.Points</td>
-                @Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Points)
+                <td>
+                @Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].PointsFromUser, new { htmlAttributes = new { type="number", @class ="form-control", style="width: 10em", min="0" } } )
+                </td>
             </tr>
         }
         </tbody>

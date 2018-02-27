@@ -37,11 +37,31 @@ namespace LugiaProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(DonateViewModel model)
+        public async Task<IActionResult> Index(DonateViewModel model)
         {
-            //add points from this model to the DB
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            //add points from this model to the nonprofit and deduct from user
+            foreach (NonProfitModel nonProfit in model.NonProfitsList)
+            {
+                //TODO: Error message for invalid point allocatoin
+                if (nonProfit.PointsFromUser > 0 && user.Points>=nonProfit.PointsFromUser)
+                {
+                    var nonProfitDb = _dbContext.NonProfits.First(m => m.Id == nonProfit.Id);
+                    nonProfitDb.Points += nonProfit.PointsFromUser;
+                    user.Points -= nonProfit.PointsFromUser;
+                    //set this back to zero once transaction is complete
+                    nonProfit.PointsFromUser = 0;
+                    nonProfitDb.PointsFromUser = 0;
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                _dbContext.SaveChanges();
+            }
+            model.User = user;
+            model.NonProfitsList = _dbContext.NonProfits.ToList();
 
-            return View();
+            return RedirectToAction("Index", "Donate");
         }
     }
 }
