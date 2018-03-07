@@ -11,6 +11,7 @@ namespace LugiaProject.Models
         public String Name { get; set; }
         public String Description { get; set; }
         public int Points { get; set; }
+        public int PointsGoal { get; set; }
         public int PointsFromUser { get; set; }
 
         public NonProfitModel()

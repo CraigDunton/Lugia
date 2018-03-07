@@ -7,6 +7,25 @@
 <script src="/js/timeme.min.js"></script>
 
 <script type="text/javascript">
+
+    
+    var tracker = document.getElementById("tracker");
+    //var message = document.getElementById("active-message");
+
+    function redify() {
+        //tracker.hidden = true;
+        var tab = document.getElementById("active-message");
+        tab.hidden = false;
+        console.log("REDIFY");
+    }
+
+    function greenify() {
+        var tab = document.getElementById("active-message");
+        tab.hidden = true;
+        //tracker.hidden = false;
+        console.log("GREENIFY");
+    }
+
     function setTime() {
         var time = TimeMe.getTimeOnCurrentPageInSeconds();
         var percent = ((time) / 120) * 100;
@@ -16,7 +35,7 @@
             loadingBar.innerHTML = Math.round(percent) + "%";
             loadingBar.setAttribute("aria-valuenow", Math.round(percent));
             loadingBar.style.width = "" + percent + "%";
-            }
+        }
     }
 
     TimeMe.initialize({
@@ -49,8 +68,16 @@
     }
 </div>
 
-<footer class="track-footer">
-    <ul class="footer-text">
+<footer id="bottom-tab" class="track-footer">
+    <div id="active-message-container">
+        <div id="message">
+            <h3 class="vertical-center" style="color: #EEEEEE; margin-top: 10px">Please hover over this box so we know you are here</h3>
+        </div>
+    </div>
+    <ul id="tracker" class="footer-text">
+        <li>
+            Time on Page: <span style="font-weight: bold" id="timeSpan">0</span>
+        </li>
         <li>
             <div class="progress">
                 <div id="loading-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="0"
@@ -58,9 +85,6 @@
                     <span class="sr-only"></span>
                 </div>
             </div>
-        </li>
-        <li>
-            Time on Page: <span style="font-weight: bold" id="timeSpan">0</span>
         </li>
         <li>
             @User.Identity.Name Points: <span style="font-weight: bold"></span>
