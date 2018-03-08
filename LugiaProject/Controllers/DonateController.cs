@@ -36,6 +36,26 @@ namespace LugiaProject.Controllers
             return View(model);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(NonProfitModel model)
+        {
+            _dbContext.Attach(model);
+
+            if (ModelState.IsValid)
+            {
+                _dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Donate");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Index(DonateViewModel model)
         {
@@ -63,5 +83,27 @@ namespace LugiaProject.Controllers
 
             return RedirectToAction("Index", "Donate");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditNonProfit(DonateViewModel model)
+        {
+
+            foreach (NonProfitModel nonProfit in model.NonProfitsList)
+            {
+                var nonProfitDb = _dbContext.NonProfits.First(m => m.Id == nonProfit.Id);
+                nonProfitDb.Name = nonProfit.Name;
+                nonProfitDb.Description = nonProfit.Description;
+                nonProfitDb.PointsGoal = nonProfit.PointsGoal;
+                nonProfitDb.Points = nonProfit.Points;
+            }
+
+            if (ModelState.IsValid)
+            {
+                _dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Index","Donate");
+        }
+
     }
 }

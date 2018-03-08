@@ -40,6 +40,7 @@
         @foreach (NonProfitModel nonprofit in Model.NonProfitsList)
         {
             @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Points)
+            @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].PointsGoal)
             @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Name)
             @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Description)
             @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Id)
@@ -48,7 +49,7 @@
                 <td>@nonprofit.Description</td>
                 <td>@nonprofit.Points</td>
                 <td>
-                @Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].PointsFromUser, new { htmlAttributes = new { type="number", @class ="form-control", style="width: 10em", min="0" } } )
+                    @Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].PointsFromUser, new { htmlAttributes = new { type="number", @class ="form-control", style="width: 10em", min="0" } } )
                 </td>
             </tr>
         }
@@ -56,3 +57,42 @@
     </table>
     <button type="submit" style="float: right" class="btn btn-primary">Divvy</button>
 </form>
+
+@if (User.IsInRole("Admin"))
+{
+    <h2>Admin Dashboard</h2>
+    <form asp-area="" asp-controller="Donate" asp-action="EditNonProfit" method="post" id="editNonProfitForm">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Points</th>
+                <th scope="col">Points Goal</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (NonProfitModel nonprofit in Model.NonProfitsList)
+            {
+                //            @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Points)
+                //            @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Name)
+                //            @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Description)
+                //, new { htmlAttributes = new { type="number", @class ="form-control", style="width: 10em", min="0" } }  <-to add attributes
+                @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Id)
+                <tr>
+                    <td>@Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Name)</td>
+                    <!--<td>@Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Description)</td> -->
+                    <td>@Html.TextAreaFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Description)</td>
+                    <td>@Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Points)</td>
+                    <td>
+                        @Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].PointsGoal)
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <a asp-area="" asp-controller="Donate" asp-action="Create" title="Add New NonProfit"class="btn btn-primary">New Non Profit</a>
+        <button type="submit" style="float: right" class="btn btn-primary">Submit Changes</button>
+    </form>
+}
