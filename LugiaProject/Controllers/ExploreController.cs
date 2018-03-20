@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using LugiaProject.Data;
 using LugiaProject.Models;
+using LugiaProject.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -117,9 +118,17 @@ namespace LugiaProject.Controllers
 
         public List<StumbleModel> ParseBingUrls(string query)
         {
+            
             var sites = new List<StumbleModel>();
             var web = new HtmlWeb();
-            var doc = web.Load(se + query);
+            string sources = "%20(site%3Anationalgeographic.com";
+            foreach (var source in SourcesConstants.SourcesList)
+            {
+                sources += "%20OR%20site%3A" + source;
+            }
+
+            sources += ")";
+            var doc = web.Load(se + query + sources);
 
             var nodes = doc.DocumentNode.Descendants("li")
                            .Where(d => d.Attributes.Contains("class")
@@ -128,42 +137,50 @@ namespace LugiaProject.Controllers
                            .ToList();
             foreach (var n in nodes)
             {
-                //var w = new HtmlWeb();
-                //var d = web.Load(n.First().Attributes["href"].Value);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(n.First().Attributes["href"].Value);
-                request.UseDefaultCredentials = true;
-                try
+                //Do a get request on each node and check if its I-frame able. This takes forever
+                if (sites.Count == 0)
                 {
-                    //don't know why to use using but the internet says so
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+
+                    //var w = new HtmlWeb();
+                    //var d = web.Load(n.First().Attributes["href"].Value);
+
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(n.First().Attributes["href"].Value);
+                    request.UseDefaultCredentials = true;
+
+                    try
                     {
-                        String header = response.GetResponseHeader("X-Frame-Options");
-                        Console.Write("Here is header: " + header + "\n");
 
-                        if (!(header.ToLower().Equals("deny")|| header.ToLower().Equals("sameorigin"))) {
+                        using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+                        {
+                            String header = response.GetResponseHeader("X-Frame-Options");
+                            Console.Write("Here is header: " + header + "\n");
 
-                            var stm = new StumbleModel()
+                            if (!(header.ToLower().Equals("deny") || header.ToLower().Equals("sameorigin")))
                             {
 
-                                Title = n.First().InnerText,
-                                Url = n.First().Attributes["href"].Value
-                            };
+                                var stm = new StumbleModel()
+                                {
 
-                            sites.Add(stm);
+                                    Title = n.First().InnerText,
+                                    Url = n.First().Attributes["href"].Value
+                                };
 
+                                sites.Add(stm);
+
+                            }
                         }
                     }
-                }
-                //in case of 400, 302, idk shit hits the fan sometimes
-                catch (WebException e)
-                {
-                    if (!e.Status.Equals(WebExceptionStatus.UnknownError))
+                    //in case of 400, 302, idk shit hits the fan sometimes
+                    catch (WebException e)
                     {
-                        using (WebResponse response = e.Response)
+                        if (!e.Status.Equals(WebExceptionStatus.UnknownError))
                         {
-                            HttpWebResponse httpResponse = (HttpWebResponse)response;
-                            Console.WriteLine("Error code: {0} ", httpResponse.StatusCode);
+                            using (WebResponse response = e.Response)
+                            {
+                                HttpWebResponse httpResponse = (HttpWebResponse) response;
+                                Console.WriteLine("Error code: {0} ", httpResponse.StatusCode);
+                            }
                         }
                     }
                 }
