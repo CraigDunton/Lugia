@@ -30,6 +30,7 @@
         var percent = ((time) / 120) * 100;
         var loadingBar = document.getElementById('loading-bar');
         document.getElementById('timeSpan').innerHTML = Math.round(time);
+        document.getElementById('pts').innerHtml = Math.round(time);
         if(percent <= 100){
             loadingBar.innerHTML = Math.round(percent) + "%";
             loadingBar.setAttribute("aria-valuenow", Math.round(percent));
@@ -42,6 +43,17 @@
         idleTimeoutInSeconds: 15 // time before user considered idle
     });
     setInterval(setTime, 1000);
+
+    window.onbeforeunload = function () {
+        var time = TimeMe.getTimeOnCurrentPageInSeconds();
+        console.log(time);
+        $.ajax({
+            type: 'POST',
+            async: false,
+            data: '=' + time,
+            url: 'Explore/GivePoints'
+        });
+    }
 </script>
 
 <div class="content-container">
@@ -86,7 +98,7 @@
             </div>
         </li>
         <li>
-            @User.Identity.Name Points: <span style="font-weight: bold"></span>
+            @User.Identity.Name Points: <span id="pts" style="font-weight: bold"></span>
         </li>
     </ul>
 </footer>

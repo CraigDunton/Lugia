@@ -23,6 +23,7 @@ namespace LugiaProject.Controllers
         {
             _dbContext = dbContext;
             _userManager = userManager;
+            //SeedData.Initialize(dbContext);
         }
 
         public async Task<IActionResult> Index()
@@ -69,7 +70,7 @@ namespace LugiaProject.Controllers
                 Random rand = new Random();
                 
                 var interests = _dbContext.Interests.Where(u => u.UserId == user.Id).ToList();
-                int r = rand.Next(interests.Count);
+                var r = rand.Next(interests.Count);
                 var interest = interests.ElementAt(r);
                 eModel = new ExploreModel()
                 {
@@ -90,6 +91,28 @@ namespace LugiaProject.Controllers
                 return View("Index", eModel);
             }
 
+        }
+
+        [HttpPost]
+        public async Task<StatusCodeResult> GivePoints(float seconds)
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            var possibleSponsors = _dbContext.Sponsors.Where(x => x.Points > 100).ToList();
+            var rand = new Random().Next(0, possibleSponsors.Count() - 1);
+            var selectedSponsor = possibleSponsors.ElementAt(rand);
+
+            var pointsToGain = Convert.ToInt32(seconds);
+
+            selectedSponsor.Points -= pointsToGain;
+            selectedSponsor.PointsGiven += pointsToGain;
+            user.Points += pointsToGain;
+
+            _dbContext.Sponsors.Update(selectedSponsor);
+            _dbContext.SaveChanges();
+            await _userManager.UpdateAsync(user);
+
+
+            return StatusCode(200);
         }
 
         [HttpPost]
@@ -139,49 +162,50 @@ namespace LugiaProject.Controllers
             {
 
                 //Do a get request on each node and check if its I-frame able. This takes forever
-                if (sites.Count == 0)
+                if (sites.Count != 0) continue;
+                //var w = new HtmlWeb();
+                //var d = web.Load(n.First().Attributes["href"].Value);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(n.First().Attributes["href"].Value);
+                request.UseDefaultCredentials = true;
+
+                try
                 {
 
-                    //var w = new HtmlWeb();
-                    //var d = web.Load(n.First().Attributes["href"].Value);
-
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(n.First().Attributes["href"].Value);
-                    request.UseDefaultCredentials = true;
-
-                    try
+                    using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
                     {
+                        String header = response.GetResponseHeader("X-Frame-Options");
+                        Console.Write("Here is header: " + header + "\n");
 
-                        using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+                        if (!(header.ToLower().Equals("deny") || header.ToLower().Equals("sameorigin")))
                         {
-                            String header = response.GetResponseHeader("X-Frame-Options");
-                            Console.Write("Here is header: " + header + "\n");
+                            var tempUrl = n.First().Attributes["href"].Value;
+                            if (tempUrl.Equals("http:"))
+                            {
+                                tempUrl = "https:" + tempUrl.Substring(6, tempUrl.Length);
+                            }
 
-                            if (!(header.ToLower().Equals("deny") || header.ToLower().Equals("sameorigin")))
+                            Console.WriteLine(tempUrl);
+                            var stm = new StumbleModel()
                             {
 
-                                var stm = new StumbleModel()
-                                {
+                                Title = n.First().InnerText,
+                                Url = tempUrl
+                            };
 
-                                    Title = n.First().InnerText,
-                                    Url = n.First().Attributes["href"].Value
-                                };
+                            sites.Add(stm);
 
-                                sites.Add(stm);
-
-                            }
                         }
                     }
-                    //in case of 400, 302, idk shit hits the fan sometimes
-                    catch (WebException e)
+                }
+                //in case of 400, 302, idk shit hits the fan sometimes
+                catch (WebException e)
+                {
+                    if (e.Status.Equals(WebExceptionStatus.UnknownError)) continue;
+                    using (WebResponse response = e.Response)
                     {
-                        if (!e.Status.Equals(WebExceptionStatus.UnknownError))
-                        {
-                            using (WebResponse response = e.Response)
-                            {
-                                HttpWebResponse httpResponse = (HttpWebResponse) response;
-                                Console.WriteLine("Error code: {0} ", httpResponse.StatusCode);
-                            }
-                        }
+                        HttpWebResponse httpResponse = (HttpWebResponse) response;
+                        Console.WriteLine("Error code: {0} ", httpResponse.StatusCode);
                     }
                 }
 

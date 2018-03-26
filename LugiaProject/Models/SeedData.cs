@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using LugiaProject.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace LugiaProject.Models
 {
@@ -12,38 +8,50 @@ namespace LugiaProject.Models
         public static void Initialize(ApplicationDbContext dbContext)
         {
 
-            if (dbContext.NonProfits.Any())
+            //if (!dbContext.NonProfits.Any())
+            //{
+            //    dbContext.NonProfits.AddRange(
+
+            //        new NonProfitModel
+            //        {
+            //            Description = "Holla holla holla, feed dem boys",
+            //            Id = 0,
+            //            Name = "Feed dem boys",
+            //            Points = 420
+            //        },
+
+            //        new NonProfitModel
+            //        {
+            //            Description = "Quench some thirst",
+            //            Id = 1,
+            //            Name = "Water Guys",
+            //            Points = 8080
+            //        },
+
+            //        new NonProfitModel
+            //        {
+            //            Description = "Help stop the bad things",
+            //            Id = 2,
+            //            Name = "Stop Bad",
+            //            Points = 9500
+            //        }
+
+            //    );
+            //}
+
+            if (!dbContext.Sponsors.Any())
             {
-                return;
+                dbContext.Sponsors.AddRange(
+                    new SponsorModel
+                    {
+                        Name = "Nationwide",
+                        Description = "Nationwide does cool things",
+                        Points = 10000,
+                        PointsGiven = 0
+                    }
+                );
             }
 
-            dbContext.NonProfits.AddRange(
-                
-                new NonProfitModel
-                {
-                    Description = "Holla holla holla, feed dem boys",
-                    Id = 0,
-                    Name = "Feed dem boys",
-                    Points = 420
-                },
-
-                new NonProfitModel
-                {
-                    Description = "Quench some thirst",
-                    Id = 1,
-                    Name = "Water Guys",
-                    Points = 8080
-                },
-
-                new NonProfitModel
-                {
-                    Description = "Help stop the bad things",
-                    Id = 2,
-                    Name = "Stop Bad",
-                    Points = 9500
-                }
-
-                );
             dbContext.SaveChanges();
         }
     }
