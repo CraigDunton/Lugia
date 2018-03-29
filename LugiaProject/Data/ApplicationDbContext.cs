@@ -9,6 +9,7 @@ namespace LugiaProject.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<AInterest> Interests { get; set; }

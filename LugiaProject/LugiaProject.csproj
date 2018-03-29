@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeIdentifiers>win10-x64;osx.10.11-x64;ubuntu.16.10-x64</RuntimeIdentifiers>
     <UserSecretsId>aspnet-LugiaProject-282FE30C-C791-4F94-B8B2-9AC2910A58A5</UserSecretsId>
   </PropertyGroup>
 

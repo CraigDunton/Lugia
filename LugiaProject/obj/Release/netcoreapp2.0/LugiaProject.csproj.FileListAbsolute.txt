@@ -1,0 +1,12 @@
+C:\Workspace\Lugia\LugiaProject\bin\Release\netcoreapp2.0\LugiaProject.deps.json
+C:\Workspace\Lugia\LugiaProject\bin\Release\netcoreapp2.0\LugiaProject.runtimeconfig.json
+C:\Workspace\Lugia\LugiaProject\bin\Release\netcoreapp2.0\LugiaProject.runtimeconfig.dev.json
+C:\Workspace\Lugia\LugiaProject\bin\Release\netcoreapp2.0\LugiaProject.dll
+C:\Workspace\Lugia\LugiaProject\bin\Release\netcoreapp2.0\LugiaProject.pdb
+C:\Workspace\Lugia\LugiaProject\obj\Release\netcoreapp2.0\LugiaProject.csprojResolveAssemblyReference.cache
+C:\Workspace\Lugia\LugiaProject\obj\Release\netcoreapp2.0\LugiaProject.csproj.CoreCompileInputs.cache
+C:\Workspace\Lugia\LugiaProject\obj\Release\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Workspace\Lugia\LugiaProject\obj\Release\netcoreapp2.0\LugiaProject.AssemblyInfoInputs.cache
+C:\Workspace\Lugia\LugiaProject\obj\Release\netcoreapp2.0\LugiaProject.AssemblyInfo.cs
+C:\Workspace\Lugia\LugiaProject\obj\Release\netcoreapp2.0\LugiaProject.dll
+C:\Workspace\Lugia\LugiaProject\obj\Release\netcoreapp2.0\LugiaProject.pdb
