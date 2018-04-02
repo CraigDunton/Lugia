@@ -29,16 +29,32 @@
         @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Name)
         @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Description)
         @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Id)
-        <div class="row">
+        <div class="row" style="margin-left:auto;margin-right:auto; width: 40%;">
             <h3>@nonprofit.Name</h3>
-            <p>@nonprofit.Description</p>
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="@nonprofit.Points"
-                     aria-valuemin="0" aria-valuemax="@nonprofit.PointsGoal" style="width: 70%; color: green">
-                    <span class="sr-only">70% Donated</span>
+            <table>
+                <tr>
+                    <th style="width: 100%">
+                        <b>Description:</b>
+                    </th>
+                    <th>
+                        <b>Donate:</b>
+                    </th>
+                </tr>
+                <tr>
+                    <td style="width: 100%">
+                        @nonprofit.Description
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].PointsFromUser, new { htmlAttributes = new { type = "number", @class = "form-control", style = "width: 10em", min = "0" } })
+                    </td>
+                </tr>
+            </table>
+            <div class="progress" style="width: 100%; margin-top: 10px;">
+                <div class="progress-bar-success" role="progressbar" aria-valuenow="@nonprofit.Points"
+                     aria-valuemin="0" aria-valuemax="@nonprofit.PointsGoal" style="width: 70%; color: white; text-align: center;">
+                    @((((double)nonprofit.Points / @nonprofit.PointsGoal) * 100).ToString("c"))% Donated
                 </div>
-            </div> 
-            @Html.EditorFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].PointsFromUser, new {htmlAttributes = new {type = "number", @class = "form-control", style = "width: 10em", min = "0"}})
+            </div>
         </div>
     }
     @*</tbody>
