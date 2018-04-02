@@ -24,8 +24,13 @@ namespace LugiaProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+#if DEBUG
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DebugConnection")));
+#else
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ProdConnection")));
+#endif
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -34,7 +39,7 @@ namespace LugiaProject
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = "670770840947-bnnva5pk87unaq9jejkrehi5tcrl8nie.apps.googleusercontent.com"; //Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = "AIzaSyC6K7Q3Iyo2SlTNrtB3DIXbeGmzsfIPp5s"; //Configuration["Authentication:Google:ClientSecret"];
+                googleOptions.ClientSecret = "SMQwa-r8gx8EGglFIHVKYR3R"; //Configuration["Authentication:Google:ClientSecret"];
             });
 
             // Add application services.

@@ -21,9 +21,16 @@ namespace LugiaProject
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
+#if DEBUG
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseUrls("https://localhost:44311")
+                .Build();
+#else
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseUrls("http://0.0.0.0:80")
                 .Build();
+#endif
     }
 }
