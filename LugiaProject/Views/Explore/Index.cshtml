@@ -58,8 +58,9 @@
 
 <div class="content-container">
 
-    @if (Model != null)
+    @if (Model.Result != null)
     {
+
         var res = Model.Result.First();
         Model.Result.Remove(res);
     

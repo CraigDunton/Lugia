@@ -1,6 +1,17 @@
-﻿body {
+﻿html {
+    height: 100%;
+    overflow-y: hidden;
+}
+
+body {
+    /*background-image: url(../images/bg.jpg);*/
+    background-color: #FFFFFF;
     padding-top: 50px;
     padding-bottom: 20px;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
 }
 
 /* Wrapping element */
@@ -8,6 +19,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    height: 100%;
 }
 
 /* Carousel */

@@ -23,6 +23,7 @@ namespace LugiaProject.Controllers
         {
             _dbContext = dbContext;
             _userManager = userManager;
+            SeedData.Initialize(dbContext);
             //SeedData.Initialize(dbContext);
         }
 

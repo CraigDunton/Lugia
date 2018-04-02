@@ -4,14 +4,14 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<link href="https://fonts.googleapis.com/css?family=Catamaran:400,800" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
 <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <style>
     .borderRight {
-        border-right: 1px solid #38546d;
+        border-right: 0px solid #000000;
         vertical-align: middle;
-        padding: 10px;
+        padding: 6px;
     }
     .buttonText {
         padding: 18px;
@@ -22,12 +22,19 @@
 </style>
 
 <div style="width: 100%; text-align: center">
-    <span style="display: block; font-size: 6em; font-family: 'Catamaran', sans-serif; font-weight: 800">
-        Lugia
-    </span>
-    <p style="display: block; font-size: 2em; font-family: 'Catamaran', sans-serif; font-weight: 400">
-        <span style="color: #8ff7a7">Donate</span> to the causes you love by <span style="color: #51bbfe">learning</span> more about them.
-    </p>
+    <span style="font-size: 10em; font-family: 'Open Sans', sans-serif; font-weight: 400; color: #101010">MY</span><span style="font-size: 10em; font-family: 'Open Sans', sans-serif; font-weight: 300; color: #23ce81">DO</span>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <p style="display: block; font-size: 3em; font-family: 'Open Sans', sans-serif; font-weight: 400; color: #101010">
+            <span style="color: #23ce81">Donate</span> to the causes you love by <span style="color: #23ce81">learning</span> more about them.
+        </p>
+    }
+    else
+    {
+        <p style="display: block; font-size: 3em; font-family: 'Open Sans', sans-serif; font-weight: 400; color: #101010">
+            Click the <a asp-area="" asp-controller="Explore" asp-action="Index" title="Donate" style="color: #8ff7a7">explore</a> button to begin.
+        </p>
+    }
     <section>
         @if (!SignInManager.IsSignedIn(User))
         {    
@@ -48,7 +55,7 @@
                         <p>
                             @foreach (var provider in loginProviders)
                             {
-                                <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account" style="padding:0 !important"><i class="fa fa-2x fa-google-plus borderRight" aria-hidden="true"></i><span class="buttonText">Connect with @provider.Name</span></button>
+                                <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account" style="padding: 0 !important; background-color: #101010"><i style="color: #23ce81" class="fa fa-2x fa-google-plus borderRight" aria-hidden="true"></i><span class="buttonText" style=" font-family: 'Open Sans', sans-serif; font-weight: 400; color: #FFFFFF;">Connect with @provider.Name</span></button>
                             }
                         </p>
                     </div>

@@ -15,25 +15,25 @@ namespace LugiaProject.Models
                     new NonProfitModel
                     {
                         Description = "Holla holla holla, feed dem boys",
-                        Id = 0,
                         Name = "Feed dem boys",
-                        Points = 420
+                        Points = 420,
+                        PointsGoal = 12000
                     },
 
                     new NonProfitModel
                     {
                         Description = "Quench some thirst",
-                        Id = 1,
                         Name = "Water Guys",
-                        Points = 8080
+                        Points = 8080,
+                        PointsGoal = 15000
                     },
 
                     new NonProfitModel
                     {
                         Description = "Help stop the bad things",
-                        Id = 2,
                         Name = "Stop Bad",
-                        Points = 9500
+                        Points = 9500,
+                        PointsGoal = 20000
                     }
 
                 );
