@@ -24,6 +24,8 @@
         <tbody>*@
     @foreach (NonProfitModel nonprofit in Model.NonProfitsList)
     {
+        var percent = ((double) nonprofit.Points / nonprofit.PointsGoal) * 100;
+
         @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Points)
         @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].PointsGoal)
         @Html.HiddenFor(m => m.NonProfitsList[Model.NonProfitsList.IndexOf(nonprofit)].Name)
@@ -51,15 +53,15 @@
             </table>
             <div class="progress" style="width: 100%; margin-top: 10px;">
                 <div class="progress-bar-success" role="progressbar" aria-valuenow="@nonprofit.Points"
-                     aria-valuemin="0" aria-valuemax="@nonprofit.PointsGoal" style="width: 70%; color: white; text-align: center;">
-                    @((((double)nonprofit.Points / @nonprofit.PointsGoal) * 100).ToString("c"))% Donated
+                     aria-valuemin="0" aria-valuemax="@nonprofit.PointsGoal" style="width: @percent%; color: white; text-align: center;">
+                    @(((double)nonprofit.Points / @nonprofit.PointsGoal) * 100)% Donated
                 </div>
             </div>
         </div>
     }
     @*</tbody>
-    </table*@>
-    <button type="submit" style="float: right" class="btn btn-primary">Divvy</button>
+    </table*@
+    <button type="submit" style="float: right" class="btn btn-primary">Donate</button>
 </form>
 
 @if (User.IsInRole("Admin"))
